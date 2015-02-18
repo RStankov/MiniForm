@@ -51,13 +51,13 @@ module Formi
     end
 
     describe '.attributes_names' do
-      it "returns attribute names" do
+      it 'returns attribute names' do
         expect(ExampleObject.attribute_names).to eq %i(name price)
       end
     end
 
     describe '#initialize' do
-      it "can be called with no arguments" do
+      it 'can be called with no arguments' do
         expect { ExampleObject.new }.not_to raise_error
       end
 
@@ -67,13 +67,13 @@ module Formi
         expect(object.price).to eq '$5'
       end
 
-      it "ignores invalid attributes" do
+      it 'ignores invalid attributes' do
         expect { ExampleObject.new invalid: 'attribute' }.not_to raise_error
       end
 
       it 'handles HashWithIndifferentAccess hashes' do
         hash   = ActiveSupport::HashWithIndifferentAccess.new 'price' => '$5'
-        object = ExampleObject.new price: '$5'
+        object = ExampleObject.new hash
 
         expect(object.price).to eq '$5'
       end
@@ -87,4 +87,3 @@ module Formi
     end
   end
 end
-

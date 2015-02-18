@@ -26,22 +26,18 @@ module Formi
     end
 
     module ClassMethods
-      def attributes(*attributes, delegate: nil, prefix: nil, allow_nil: nil)
-        @attribute_names.push *attributes
+      attr_reader :attribute_names
 
+      def attributes(*attributes, delegate: nil, prefix: nil, allow_nil: nil)
+        @attribute_names.push(*attributes)
 
         if delegate.nil?
-          attr_accessor *attributes
+          attr_accessor(*attributes)
         else
-          self.delegate *attributes, to: delegate, prefix: prefix, allow_nil: allow_nil
-          self.delegate *attributes.map { |attr| "#{attr}=" }, to: delegate, prefix: prefix, allow_nil: allow_nil
+          self.delegate(*attributes, to: delegate, prefix: prefix, allow_nil: allow_nil)
+          self.delegate(*attributes.map { |attr| "#{attr}=" }, to: delegate, prefix: prefix, allow_nil: allow_nil)
         end
-      end
-
-      def attribute_names
-        @attribute_names
       end
     end
   end
 end
-
