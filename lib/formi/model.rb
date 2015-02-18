@@ -41,6 +41,11 @@ module Formi
       end
     end
 
+    def update!(attributes = [])
+      raise InvalidForm unless update attributes
+      self
+    end
+
     private
 
     def perform

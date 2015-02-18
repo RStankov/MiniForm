@@ -174,5 +174,28 @@ module Formi
         object.update
       end
     end
+
+    describe '#update!' do
+      it 'returns self' do
+        object = Example.new
+        expect(object.update!).to eq object
+      end
+
+      it 'calls update with given arguments' do
+        object = Example.new
+
+        expect(object).to receive(:update).with(:attributes).and_return true
+
+        object.update! :attributes
+      end
+
+      it 'raises error when update fails' do
+        object = Example.new
+
+        allow(object).to receive(:update).and_return false
+
+        expect { object.update! }.to raise_error InvalidForm
+      end
+    end
   end
 end
