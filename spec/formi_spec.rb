@@ -1,9 +1,16 @@
 require 'spec_helper'
-require 'ostruct'
 
 module Formi
   describe Model do
-    let(:user) { OpenStruct.new name: 'Name' }
+    let(:user) { User.new name: 'Name' }
+
+    class User
+      include ActiveModel::Model
+
+      attr_accessor :name
+
+      validates :name, presence: true
+    end
 
     Example = Class.new do
       include Model
@@ -89,6 +96,14 @@ module Formi
       it 'can delegate model attributes' do
         object = ExampleWithModel.new user: user
         expect(object.name).to eq user.name
+      end
+
+      it 'performs nested validation for model' do
+        user   = User.new
+        object = ExampleWithModel.new user: user
+
+        expect(object).not_to be_valid
+        expect(object.errors[:name]).to be_present
       end
     end
 

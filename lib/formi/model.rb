@@ -89,7 +89,7 @@ module Formi
         attributes(name)
         attributes(*attributes, delegate: name, prefix: prefix, allow_nil: allow_nil) unless attributes.empty?
 
-        # TODO - nested validation
+        validates name, 'formi/nested' => true
       end
     end
   end
