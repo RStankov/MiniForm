@@ -13,8 +13,6 @@ module Formi
 
         extend ClassMethods
 
-        @attribute_names = []
-
         define_model_callbacks :update
 
         before_update :before_update
@@ -72,9 +70,12 @@ module Formi
     end
 
     module ClassMethods
-      attr_reader :attribute_names
+      def attribute_names
+        @attribute_names || []
+      end
 
       def attributes(*attributes, delegate: nil, prefix: nil, allow_nil: nil)
+        @attribute_names ||= []
         @attribute_names.push(*attributes)
 
         if delegate.nil?
