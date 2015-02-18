@@ -137,9 +137,6 @@ module Formi
         validates :name, presence: true
       end
 
-      before do
-      end
-
       it 'updates attributes' do
         object = ExampleForUpdate.new name: 'value'
 
