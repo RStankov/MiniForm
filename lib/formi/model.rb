@@ -46,6 +46,11 @@ module Formi
           self.delegate(*attributes.map { |attr| "#{attr}=" }, to: delegate, prefix: prefix, allow_nil: allow_nil)
         end
       end
+
+      def model(name, attributes: [], prefix: nil, allow_nil: nil)
+        attributes(name)
+        attributes(*attributes, delegate: name, prefix: prefix, allow_nil: allow_nil) unless attributes.empty?
+      end
     end
   end
 end
