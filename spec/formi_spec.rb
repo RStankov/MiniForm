@@ -157,6 +157,15 @@ module Formi
         object.update
       end
 
+      it 'supports update callbacks' do
+        object = ExampleForUpdate.new name: 'value'
+
+        expect(object).to receive(:before_update)
+        expect(object).to receive(:after_update)
+
+        object.update
+      end
+
       it 'returns false when validations fail' do
         object = ExampleForUpdate.new name: nil
 

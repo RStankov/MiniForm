@@ -9,9 +9,16 @@ module Formi
         include ActiveModel::Conversion
 
         extend ActiveModel::Naming
+        extend ActiveModel::Callbacks
+
         extend ClassMethods
 
         @attribute_names = []
+
+        define_model_callbacks :update
+
+        before_update :before_update
+        after_update :after_update
       end
     end
 
@@ -37,7 +44,11 @@ module Formi
       self.attributes = attributes unless attributes.empty?
 
       valid?.tap do |result|
-        perform if result
+        if result
+          run_callbacks :update do
+            perform
+          end
+        end
       end
     end
 
@@ -49,6 +60,14 @@ module Formi
     private
 
     def perform
+      # noop
+    end
+
+    def before_update
+      # noop
+    end
+
+    def after_update
       # noop
     end
 
