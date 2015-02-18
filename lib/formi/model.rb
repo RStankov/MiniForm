@@ -33,6 +33,20 @@ module Formi
       Hash[self.class.attribute_names.map { |name| [name, public_send(name)] }]
     end
 
+    def update(attributes = [])
+      self.attributes = attributes unless attributes.empty?
+
+      valid?.tap do |result|
+        perform if result
+      end
+    end
+
+    private
+
+    def perform
+      # noop
+    end
+
     module ClassMethods
       attr_reader :attribute_names
 

@@ -127,5 +127,52 @@ module Formi
         expect(object.attributes).to eq name: 'iPhone', price: '$5'
       end
     end
+
+    describe '#update' do
+      ExampleForUpdate = Class.new do
+        include Model
+
+        attributes :name
+
+        validates :name, presence: true
+      end
+
+      before do
+      end
+
+      it 'updates attributes' do
+        object = ExampleForUpdate.new name: 'value'
+
+        expect { object.update(name: 'new value') }.to change { object.name }.to 'new value'
+      end
+
+      it 'returns true when validations pass' do
+        object = ExampleForUpdate.new name: 'value'
+
+        expect(object.update).to eq true
+      end
+
+      it 'calls "perfom" method when validation pass' do
+        object = ExampleForUpdate.new name: 'value'
+
+        expect(object).to receive(:perform)
+
+        object.update
+      end
+
+      it 'returns false when validations fail' do
+        object = ExampleForUpdate.new name: nil
+
+        expect(object.update).to eq false
+      end
+
+      it 'does not call "perfom" method when validation fail' do
+        object = ExampleForUpdate.new name: nil
+
+        expect(object).not_to receive(:perform)
+
+        object.update
+      end
+    end
   end
 end
