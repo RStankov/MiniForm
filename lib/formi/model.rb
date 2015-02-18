@@ -50,6 +50,8 @@ module Formi
       def model(name, attributes: [], prefix: nil, allow_nil: nil)
         attributes(name)
         attributes(*attributes, delegate: name, prefix: prefix, allow_nil: allow_nil) unless attributes.empty?
+
+        # TODO - nested validation
       end
     end
   end
