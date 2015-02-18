@@ -38,7 +38,7 @@ module Formi
       Hash[self.class.attribute_names.map { |name| [name, public_send(name)] }]
     end
 
-    def update(attributes = [])
+    def update(attributes = {})
       self.attributes = attributes unless attributes.empty?
 
       valid?.tap do |result|
@@ -50,7 +50,7 @@ module Formi
       end
     end
 
-    def update!(attributes = [])
+    def update!(attributes = {})
       fail InvalidForm unless update attributes
       self
     end
