@@ -1,18 +1,26 @@
-require 'active_support/concern'
-require 'active_support/hash_with_indifferent_access'
-require 'active_support/core_ext/module/delegation'
-require 'active_support/core_ext/hash/slice'
+require 'active_support/all'
+require 'active_model'
 
 module Formi
-  module Attributes
-    extend ActiveSupport::Concern
+  module Model
+    def self.included(base)
+      base.class_eval do
+        include ActiveModel::Validations
+        include ActiveModel::Conversion
 
-    included do
-      @attribute_names = []
+        extend ActiveModel::Naming
+        extend ClassMethods
+
+        @attribute_names = []
+      end
     end
 
     def initialize(attributes = {})
       self.attributes = attributes
+    end
+
+    def persisted?
+      false
     end
 
     def attributes=(attributes)

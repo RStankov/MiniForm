@@ -2,14 +2,14 @@ require 'spec_helper'
 require 'ostruct'
 
 module Formi
-  describe Attributes do
+  describe Model do
     ExampleObject = Class.new do
-      include Attributes
+      include Model
       attributes :name, :price
     end
 
     ExampleObjectWithDelegate = Class.new do
-      include Attributes
+      include Model
 
       attr_reader :user
 
@@ -19,6 +19,31 @@ module Formi
         @user = user
       end
     end
+
+    describe 'acts as ActiveModel' do
+      include ActiveModel::Lint::Tests
+
+      before do
+        @model = ExampleObject.new
+      end
+
+      def assert(condition, message = nil)
+        expect(condition).to be_truthy, message
+      end
+
+      def assert_kind_of(expected_kind, object, message = nil)
+        expect(object).to be_kind_of(expected_kind), message
+      end
+
+      def assert_equal(expected_value, value, message = nil)
+        expect(value).to eq(expected_value), message
+      end
+
+      ActiveModel::Lint::Tests.public_instance_methods.map(&:to_s).grep(/^test/).each do |method|
+        example(method.gsub('_', ' ')) { send method }
+      end
+    end
+
 
     let(:user) { OpenStruct.new name: 'Name' }
 

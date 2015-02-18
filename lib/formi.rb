@@ -1,5 +1,5 @@
 require 'formi/version'
-require 'formi/attributes'
+require 'formi/model'
 require 'formi/nested_validator'
 
 module Formi
