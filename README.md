@@ -32,7 +32,7 @@ class ProductForm
 
   validates :name, :price, :description, presence: true
 
-  # this is called after successfull update
+  # called after successfull validations in update
   def perfom
     @id = ExternalService.create(attributes)
   end
@@ -86,12 +86,12 @@ class SignUpForm
 end
 ```
 
-```
+```ruby
 form = SignUpForm.new
-form.name = 'name' # => `form.user.name = 'name'`
-form.name          # => `form.user.name`
-form.plan = 'free' # => `form.account.plan = 'free'`
-form.plan          # => `form.account.plan`
+form.name = 'name' # => form.user.name = 'name'
+form.name          # => form.user.name
+form.plan = 'free' # => form.account.plan = 'free'
+form.plan          # => form.account.plan
 ```
 
 ### Nested validator
@@ -130,7 +130,7 @@ class SignUpForm
   include FormObject::Model
 
   modal :user, attributes: %i(name email)
-  model :account, attributes: %(company_name plan)
+  model :account, attributes: %i(company_name plan)
 
   def initialize
     @account = Account.new
@@ -153,7 +153,7 @@ class SignUpForm
   include FormObject::Model
 
   modal :user, attributes: %i(name email), save: true
-  model :account, attributes: %(company_name plan), save: true
+  model :account, attributes: %i(company_name plan), save: true
 
   def initialize
     @account = Account.new
@@ -195,21 +195,56 @@ end
 
 ### Methods
 
-```ruby
-.model
-.attributes
-
-#attributes=(attributes)
-#attributes
-#update(attributes = {})
-#update!(attributes = {})
-#persited?
-
-#perform
-#before_update
-#after_update
-#transaction
-```
+<table>
+  <tr>
+    <th>Method</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>.model</td>
+    <td>Defines a sub object for the form</td>
+  </tr>
+  <tr>
+    <td>.attributes</td>
+    <td>Defines an attribute, it can delegate to sub object</td>
+  </tr>
+  <tr>
+    <td>#initialize</td>
+    <td>Ment to be overwritten. By defaults calls `attributes=`</td>
+  </tr>
+  <tr>
+    <td>#attributes=</td>
+    <td>Sets values of all attributes</td>
+  </tr>
+  <tr>
+    <td>#attributes</td>
+    <td>Returns all attributes of the form</td>
+  </tr>
+  <tr>
+    <td>#update</td>
+    <td>Sets attributes, calls validations, saves models and `peform`</td>
+  </tr>
+  <tr>
+    <td>#update!</td>
+    <td>Calls `update` if validation fails it raises an error</td>
+  </tr>
+  <tr>
+    <td>#perform</td>
+    <td>Ment to be overwritten. Doesn't do anything by default</td>
+  </tr>
+  <tr>
+    <td>#before_update</td>
+    <td>Ment to be overwritten.</td>
+  </tr>
+  <tr>
+    <td>#after_update</td>
+    <td>Ment to be overwritten.</td>
+  </tr>
+  <tr>
+    <td>#transaction</td>
+    <td>If ActiveRecord is available, wraps `perform` in transaction.</td>
+  </tr>
+</table>
 
 ## Contributing
 
