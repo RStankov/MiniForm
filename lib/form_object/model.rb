@@ -72,7 +72,7 @@ module FormObject
 
     module ClassMethods
       def attribute_names
-        @attribute_names || []
+        @attribute_names ||= []
       end
 
       def models_to_save
@@ -80,8 +80,7 @@ module FormObject
       end
 
       def attributes(*attributes, delegate: nil, prefix: nil, allow_nil: nil)
-        @attribute_names ||= []
-        @attribute_names.push(*attributes)
+        attribute_names.push(*attributes)
 
         if delegate.nil?
           attr_accessor(*attributes)
