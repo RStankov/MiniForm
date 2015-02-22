@@ -1,3 +1,7 @@
+[![Code Climate](https://codeclimate.com/github/RStankov/FormObject.png)](https://codeclimate.com/github/RStankov/FormObject)
+[![Build Status](https://secure.travis-ci.org/RStankov/FormObject.png)](http://travis-ci.org/RStankov/FormObject)
+[![Code coverage](https://coveralls.io/repos/RStankov/FormObject/badge.png?branch=master)](https://coveralls.io/r/RStankov/FormObject)
+
 # FormObject
 
 Helpers for dealing with form objects and nested forms.
