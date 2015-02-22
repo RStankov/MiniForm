@@ -10,8 +10,14 @@ module FormObject
       validates :name, presence: true
     end
 
-    class Record < Struct.new(:user)
+    class Record
       include ActiveModel::Validations
+
+      attr_accessor :user
+
+      def initialize(user)
+        @user = user
+      end
     end
 
     let(:validator) { NestedValidator.new(attributes: [:user]) }
