@@ -26,13 +26,11 @@ Or install it yourself as:
 
 ```ruby
 class ProductForm
-  include FormObject
+  include FormObject::Model
 
-  attributes :name, :price, :description
+  attributes :id, :name, :price, :description
 
   validates :name, :price, :description, presence: true
-
-  attr_reader :id
 
   # this is called after successfull update
   def perfom
@@ -42,30 +40,158 @@ end
 ```
 
 ```ruby
-def create
-  @product = ProductForm.new
+class ProductsController < ApplicationController
+  def create
+    @product = ProductForm.new
 
-  if @product.update(product_params)
-    redirect_to product_path(product.id)
-  else
-    render :edit
+    if @product.update(product_params)
+      redirect_to product_path(product.id)
+    else
+      render :edit
+    end
+  end
+
+  private
+
+  def product_params
+    params.require(:product).permit(:name, :price, :description)
   end
 end
+```
 
-private
+### Delegated attributes
 
-def product_params
-  params.require(:product).permit(:name, :price, :description)
+Attributes can be delegated to a sub object.
+
+```ruby
+class SignUpForm
+  include FormObject::Model
+
+  attr_reader :account, :user
+
+  attributes :name, :email, delegate: :user
+  attributes :company_name, :plan, delegate: :account
+
+  validates :name, :email, :company_name, :plan, presence: true
+
+  def initialize
+    @account = Account.new
+    @user    = User.new account: @account
+  end
+
+  def peform
+    user.save!
+    account.save!
+  end
+end
+```
+
+```
+form = SignUpForm.new
+form.name = 'name' # => `form.user.name = 'name'`
+form.name          # => `form.user.name`
+form.plan = 'free' # => `form.account.plan = 'free'`
+form.plan          # => `form.account.plan`
+```
+
+### Nested validator
+
+`form_object/nested` validator runs validations on the given model and copies error to the form object.
+
+```ruby
+class SignUpForm
+  include FormObject::Model
+
+  attr_reader :account, :user
+
+  attributes :name, :email, delegate: :user
+  attributes :company_name, :plan, delegate: :account
+
+  validates :account, :user, 'form_object/nested' => true
+
+  def initialize
+    @account = Account.new
+    @user    = User.new account: @account
+  end
+
+  def peform
+    account.save!
+    user.save!
+  end
 end
 ```
 
 ### Nested models
 
-### Nested validator
+Combines delegated attributes and nested validation into a single call.
+
+```ruby
+class SignUpForm
+  include FormObject::Model
+
+  modal :user, attributes: %i(name email)
+  model :account, attributes: %(company_name plan)
+
+  def initialize
+    @account = Account.new
+    @user    = User.new account: @account
+  end
+
+  def peform
+    account.save!
+    user.save!
+  end
+end
+```
+
+### Auto saving nested models
+
+In most of the time `peform` is just calling `save!`.
+
+```ruby
+class SignUpForm
+  include FormObject::Model
+
+  modal :user, attributes: %i(name email), save: true
+  model :account, attributes: %(company_name plan), save: true
+
+  def initialize
+    @account = Account.new
+    @user    = User.new account: @account
+  end
+end
+```
 
 ### Before/after callbacks
 
-### Delegated attributes
+```ruby
+class SignUpForm
+  include FormObject::Model
+
+  # ... code
+
+  before_update :run_before_update
+  after_update :run_after_update
+
+  private
+
+  def run_before_update
+    # ...
+  end
+
+  def run_after_update
+    # ...
+  end
+
+  # alternatively you can overwrite "before_update"
+  def before_update
+  end
+
+  # alternatively you can overwrite "after_update"
+  def after_update
+  end
+end
+```
 
 ### Methods
 
@@ -78,9 +204,12 @@ end
 #update(attributes = {})
 #update!(attributes = {})
 #persited?
-```
 
-+ included modules - ActiveModel::Model
+#perform
+#before_update
+#after_update
+#transaction
+```
 
 ## Contributing
 
