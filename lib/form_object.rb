@@ -5,4 +5,3 @@ require 'form_object/nested_validator'
 
 module FormObject
 end
-
