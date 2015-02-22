@@ -44,8 +44,10 @@ module FormObject
       valid?.tap do |result|
         if result
           run_callbacks :update do
-            self.class.models_to_save.each { |model_name| public_send(model_name).save! }
-            perform
+            transaction do
+              self.class.models_to_save.each { |model_name| public_send(model_name).save! }
+              perform
+            end
           end
         end
       end
@@ -57,6 +59,14 @@ module FormObject
     end
 
     private
+
+    def transaction(&block)
+      if defined? ActiveRecord
+        ActiveRecord::Base.transaction(&block)
+      else
+        yield
+      end
+    end
 
     def perform
       # noop
