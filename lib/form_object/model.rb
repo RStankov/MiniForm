@@ -68,6 +68,7 @@ module FormObject
       end
     end
 
+    # :api: private
     def save_models
       self.class.models_to_save.each { |model_name| public_send(model_name).save! }
     end
@@ -85,10 +86,12 @@ module FormObject
     end
 
     module ClassMethods
+      # :api: private
       def attribute_names
         @attribute_names ||= []
       end
 
+      # :api: private
       def models_to_save
         @models_to_save ||= []
       end
