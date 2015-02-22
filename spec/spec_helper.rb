@@ -5,7 +5,7 @@ if ENV['TRAVIS']
   Coveralls.wear!
 end
 
-require 'formi'
+require 'form_object'
 
 RSpec.configure do |config|
   config.expect_with(:rspec) { |c| c.syntax = :expect }

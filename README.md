@@ -1,4 +1,4 @@
-# Formi
+# FormObject
 
 Minor form object. Name is still unknow
 
@@ -7,7 +7,7 @@ Minor form object. Name is still unknow
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'formi'
+gem 'form_object'
 ```
 
 And then execute:
@@ -16,13 +16,13 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install formi
+    $ gem install form_object
 
 ## Usage
 
 ```ruby
 class ProductForm
-  include Formi
+  include FormObject
 
   attributes :name, :price, :description
 
@@ -89,4 +89,4 @@ end
 
 ## License
 
-**[MIT License](https://github.com/RStankov/formi/blob/master/LICENSE.txt)**
+**[MIT License](https://github.com/RStankov/FormObject/blob/master/LICENSE.txt)**

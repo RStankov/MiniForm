@@ -1,16 +1,16 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'formi/version'
+require 'form_object/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = 'formi'
-  spec.version       = Formi::VERSION
+  spec.name          = 'form_object'
+  spec.version       = FormObject::VERSION
   spec.authors       = ['Radoslav Stankov']
   spec.email         = ['rstankov@gmail.com']
-  spec.description   = 'Search object DSL'
-  spec.summary       = 'Provides DSL for creating search objects'
-  spec.homepage      = 'https://github.com/RStankov/formi'
+  spec.description   = 'Sugar around ActiveModel::Model'
+  spec.summary       = 'Easy to use form object in Rails projects'
+  spec.homepage      = 'https://github.com/RStankov/FormObject'
   spec.license       = 'MIT'
 
   spec.files         = `git ls-files`.split($INPUT_RECORD_SEPARATOR)

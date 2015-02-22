@@ -1,7 +1,7 @@
 require 'active_support/all'
 require 'active_model'
 
-module Formi
+module FormObject
   module Model
     def self.included(base)
       base.class_eval do
@@ -90,7 +90,7 @@ module Formi
         attributes(name)
         attributes(*attributes, delegate: name, prefix: prefix, allow_nil: allow_nil) unless attributes.empty?
 
-        validates name, 'formi/nested' => true
+        validates name, 'form_object/nested' => true
       end
     end
   end

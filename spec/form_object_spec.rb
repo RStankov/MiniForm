@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-module Formi
+module FormObject
   describe Model do
     let(:user) { User.new name: 'Name' }
 
