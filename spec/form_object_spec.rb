@@ -152,6 +152,12 @@ module FormObject
         validates :name, presence: true
       end
 
+      ExampleForSave = Class.new do
+        include Model
+
+        model :user, attributes: %i(name), save: true
+      end
+
       it 'updates attributes' do
         object = ExampleForUpdate.new name: 'value'
 
@@ -170,6 +176,16 @@ module FormObject
         expect(object).to receive(:perform)
 
         object.update
+      end
+
+      it 'calls "save" for the model' do
+        object = ExampleForSave.new user: user
+
+        allow(user).to receive(:save!)
+
+        object.update
+
+        expect(user).to have_received(:save!)
       end
 
       it 'supports update callbacks' do

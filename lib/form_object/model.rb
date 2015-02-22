@@ -44,6 +44,7 @@ module FormObject
       valid?.tap do |result|
         if result
           run_callbacks :update do
+            self.class.models_to_save.each { |model_name| public_send(model_name).save! }
             perform
           end
         end
@@ -74,6 +75,10 @@ module FormObject
         @attribute_names || []
       end
 
+      def models_to_save
+        @models_to_save ||= []
+      end
+
       def attributes(*attributes, delegate: nil, prefix: nil, allow_nil: nil)
         @attribute_names ||= []
         @attribute_names.push(*attributes)
@@ -86,11 +91,13 @@ module FormObject
         end
       end
 
-      def model(name, attributes: [], prefix: nil, allow_nil: nil)
+      def model(name, attributes: [], prefix: nil, allow_nil: nil, save: false)
         attributes(name)
         attributes(*attributes, delegate: name, prefix: prefix, allow_nil: allow_nil) unless attributes.empty?
 
         validates name, 'form_object/nested' => true
+
+        models_to_save << name if save
       end
     end
   end
