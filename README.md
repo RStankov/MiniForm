@@ -1,6 +1,6 @@
 # FormObject
 
-Minor form object. Name is still unknow
+Helpers for dealing with form objects and nested forms.
 
 ## Installation
 

@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ['Radoslav Stankov']
   spec.email         = ['rstankov@gmail.com']
   spec.description   = 'Sugar around ActiveModel::Model'
-  spec.summary       = 'Easy to use form object in Rails projects'
+  spec.summary       = 'Easy to use form objects in Rails projects'
   spec.homepage      = 'https://github.com/RStankov/FormObject'
   spec.license       = 'MIT'
 
