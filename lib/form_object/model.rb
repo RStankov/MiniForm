@@ -41,16 +41,16 @@ module FormObject
     def update(attributes = {})
       self.attributes = attributes unless attributes.empty?
 
-      valid?.tap do |result|
-        if result
-          run_callbacks :update do
-            transaction do
-              self.class.models_to_save.each { |model_name| public_send(model_name).save! }
-              perform
-            end
-          end
+      return false unless valid?
+
+      run_callbacks :update do
+        transaction do
+          save_models
+          perform
         end
       end
+
+      true
     end
 
     def update!(attributes = {})
@@ -66,6 +66,10 @@ module FormObject
       else
         yield
       end
+    end
+
+    def save_models
+      self.class.models_to_save.each { |model_name| public_send(model_name).save! }
     end
 
     def perform
