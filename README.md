@@ -32,8 +32,8 @@ class ProductForm
 
   validates :name, :price, :description, presence: true
 
-  # called after successfull validations in update
-  def perfom
+  # called after successful validations in update
+  def perform
     @id = ExternalService.create(attributes)
   end
 end
@@ -79,7 +79,7 @@ class SignUpForm
     @user    = User.new account: @account
   end
 
-  def peform
+  def perform
     user.save!
     account.save!
   end
@@ -96,7 +96,7 @@ form.plan          # => form.account.plan
 
 ### Nested validator
 
-`form_object/nested` validator runs validations on the given model and copies error to the form object.
+`form_object/nested` validator runs validations on the given model and copies errors to the form object.
 
 ```ruby
 class SignUpForm
@@ -114,7 +114,7 @@ class SignUpForm
     @user    = User.new account: @account
   end
 
-  def peform
+  def perform
     account.save!
     user.save!
   end
@@ -137,7 +137,7 @@ class SignUpForm
     @user    = User.new account: @account
   end
 
-  def peform
+  def perform
     account.save!
     user.save!
   end
@@ -146,7 +146,7 @@ end
 
 ### Auto saving nested models
 
-In most of the time `peform` is just calling `save!`.
+In most of the time `perform` is just calling `save!`.
 
 ```ruby
 class SignUpForm
@@ -210,7 +210,7 @@ end
   </tr>
   <tr>
     <td>#initialize</td>
-    <td>Ment to be overwritten. By defaults calls `attributes=`</td>
+    <td>Meant to be overwritten. By defaults calls `attributes=`</td>
   </tr>
   <tr>
     <td>#attributes=</td>
@@ -222,15 +222,15 @@ end
   </tr>
   <tr>
     <td>#update</td>
-    <td>Sets attributes, calls validations, saves models and `peform`</td>
+    <td>Sets attributes, calls validations, saves models and `perform`</td>
   </tr>
   <tr>
     <td>#update!</td>
-    <td>Calls `update` if validation fails it raises an error</td>
+    <td>Calls `update`. If validation fails, it raises an error</td>
   </tr>
   <tr>
     <td>#perform</td>
-    <td>Ment to be overwritten. Doesn't do anything by default</td>
+    <td>Meant to be overwritten. Doesn't do anything by default</td>
   </tr>
   <tr>
     <td>#before_update</td>
