@@ -234,11 +234,11 @@ end
   </tr>
   <tr>
     <td>#before_update</td>
-    <td>Ment to be overwritten.</td>
+    <td>Meant to be overwritten.</td>
   </tr>
   <tr>
     <td>#after_update</td>
-    <td>Ment to be overwritten.</td>
+    <td>Meant to be overwritten.</td>
   </tr>
   <tr>
     <td>#transaction</td>
