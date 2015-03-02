@@ -130,7 +130,7 @@ Combines delegated attributes and nested validation into a single call.
 class SignUpForm
   include MiniForm::Model
 
-  modal :user, attributes: %i(name email)
+  model :user, attributes: %i(name email)
   model :account, attributes: %i(company_name plan)
 
   def initialize
@@ -153,7 +153,7 @@ In most of the time `perform` is just calling `save!`.
 class SignUpForm
   include MiniForm::Model
 
-  modal :user, attributes: %i(name email), save: true
+  model :user, attributes: %i(name email), save: true
   model :account, attributes: %i(company_name plan), save: true
 
   def initialize
