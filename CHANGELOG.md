@@ -1,3 +1,5 @@
 # Changelog
 
-## Version 0.1 (unreleased)
+## Version 0.1.0
+
+* Initial release
