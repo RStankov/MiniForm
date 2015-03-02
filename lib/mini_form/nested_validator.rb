@@ -1,6 +1,6 @@
 require 'active_model'
 
-module FormObject
+module MiniForm
   class NestedValidator < ActiveModel::EachValidator
     def validate_each(record, _, relation)
       return if relation.valid?

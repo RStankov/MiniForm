@@ -1,7 +1,7 @@
 require 'active_support/all'
 require 'active_model'
 
-module FormObject
+module MiniForm
   module Model
     def self.included(base)
       base.class_eval do
@@ -111,7 +111,7 @@ module FormObject
         attributes(name)
         attributes(*attributes, delegate: name, prefix: prefix, allow_nil: allow_nil) unless attributes.empty?
 
-        validates name, 'form_object/nested' => true
+        validates name, 'mini_form/nested' => true
 
         models_to_save << name if save
       end

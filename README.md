@@ -1,8 +1,8 @@
-[![Code Climate](https://codeclimate.com/github/RStankov/FormObject.png)](https://codeclimate.com/github/RStankov/FormObject)
-[![Build Status](https://secure.travis-ci.org/RStankov/FormObject.png)](http://travis-ci.org/RStankov/FormObject)
-[![Code coverage](https://coveralls.io/repos/RStankov/FormObject/badge.png?branch=master)](https://coveralls.io/r/RStankov/FormObject)
+[![Code Climate](https://codeclimate.com/github/RStankov/MiniForm.png)](https://codeclimate.com/github/RStankov/MiniForm)
+[![Build Status](https://secure.travis-ci.org/RStankov/MiniForm.png)](http://travis-ci.org/RStankov/MiniForm)
+[![Code coverage](https://coveralls.io/repos/RStankov/MiniForm/badge.png?branch=master)](https://coveralls.io/r/RStankov/MiniForm)
 
-# FormObject
+# MiniForm
 
 Helpers for dealing with form objects and nested forms.
 
@@ -11,7 +11,7 @@ Helpers for dealing with form objects and nested forms.
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'form_object'
+gem 'mini_form'
 ```
 
 And then execute:
@@ -20,13 +20,13 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install form_object
+    $ gem install mini_form
 
 ## Usage
 
 ```ruby
 class ProductForm
-  include FormObject::Model
+  include MiniForm::Model
 
   attributes :id, :name, :price, :description
 
@@ -65,7 +65,7 @@ Attributes can be delegated to a sub object.
 
 ```ruby
 class SignUpForm
-  include FormObject::Model
+  include MiniForm::Model
 
   attr_reader :account, :user
 
@@ -96,18 +96,18 @@ form.plan          # => form.account.plan
 
 ### Nested validator
 
-`form_object/nested` validator runs validations on the given model and copies errors to the form object.
+`mini_form/nested` validator runs validations on the given model and copies errors to the form object.
 
 ```ruby
 class SignUpForm
-  include FormObject::Model
+  include MiniForm::Model
 
   attr_reader :account, :user
 
   attributes :name, :email, delegate: :user
   attributes :company_name, :plan, delegate: :account
 
-  validates :account, :user, 'form_object/nested' => true
+  validates :account, :user, 'mini_form/nested' => true
 
   def initialize
     @account = Account.new
@@ -127,7 +127,7 @@ Combines delegated attributes and nested validation into a single call.
 
 ```ruby
 class SignUpForm
-  include FormObject::Model
+  include MiniForm::Model
 
   modal :user, attributes: %i(name email)
   model :account, attributes: %i(company_name plan)
@@ -150,7 +150,7 @@ In most of the time `perform` is just calling `save!`.
 
 ```ruby
 class SignUpForm
-  include FormObject::Model
+  include MiniForm::Model
 
   modal :user, attributes: %i(name email), save: true
   model :account, attributes: %i(company_name plan), save: true
@@ -166,7 +166,7 @@ end
 
 ```ruby
 class SignUpForm
-  include FormObject::Model
+  include MiniForm::Model
 
   # ... code
 
@@ -257,4 +257,4 @@ end
 
 ## License
 
-**[MIT License](https://github.com/RStankov/FormObject/blob/master/LICENSE.txt)**
+**[MIT License](https://github.com/RStankov/MiniForm/blob/master/LICENSE.txt)**

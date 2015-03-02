@@ -1,16 +1,16 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'form_object/version'
+require 'mini_form/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = 'form_object'
-  spec.version       = FormObject::VERSION
+  spec.name          = 'mini_form'
+  spec.version       = MiniForm::VERSION
   spec.authors       = ['Radoslav Stankov']
   spec.email         = ['rstankov@gmail.com']
   spec.description   = 'Sugar around ActiveModel::Model'
   spec.summary       = 'Easy to use form objects in Rails projects'
-  spec.homepage      = 'https://github.com/RStankov/FormObject'
+  spec.homepage      = 'https://github.com/RStankov/MiniForm'
   spec.license       = 'MIT'
 
   spec.files         = `git ls-files`.split($INPUT_RECORD_SEPARATOR)

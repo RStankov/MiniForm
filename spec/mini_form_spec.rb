@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-module FormObject
+module MiniForm
   describe Model do
     let(:user) { User.new name: 'Name' }
 

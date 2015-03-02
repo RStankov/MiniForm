@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-module FormObject
+module MiniForm
   describe NestedValidator do
     class User
       include ActiveModel::Model
