@@ -14,9 +14,13 @@ module MiniForm
         extend ClassMethods
 
         define_model_callbacks :update
+        define_model_callbacks :assigment
 
         before_update :before_update
         after_update :after_update
+
+        before_assigment :before_assigment
+        after_assigment :after_assigment
       end
     end
 
@@ -29,8 +33,10 @@ module MiniForm
     end
 
     def attributes=(attributes)
-      attributes.slice(*self.class.attribute_names).each do |name, value|
-        public_send "#{name}=", value
+      run_callbacks :assigment do
+        attributes.slice(*self.class.attribute_names).each do |name, value|
+          public_send "#{name}=", value
+        end
       end
     end
 
@@ -84,6 +90,14 @@ module MiniForm
     end
 
     def after_update
+      # noop
+    end
+
+    def before_assigment
+      # noop
+    end
+
+    def after_assigment
       # noop
     end
 

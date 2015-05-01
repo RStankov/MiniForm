@@ -246,6 +246,14 @@ end
     <td>Meant to be overwritten.</td>
   </tr>
   <tr>
+    <td>#before_assigment</td>
+    <td>Meant to be overwritten.</td>
+  </tr>
+  <tr>
+    <td>#after_assigment</td>
+    <td>Meant to be overwritten.</td>
+  </tr>
+  <tr>
     <td>#transaction</td>
     <td>If ActiveRecord is available, wraps `perform` in transaction.</td>
   </tr>

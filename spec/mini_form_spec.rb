@@ -215,6 +215,15 @@ module MiniForm
         object.update
       end
 
+      it 'supports assign callbacks' do
+        object = ExampleForUpdate.new
+
+        expect(object).to receive(:before_assigment)
+        expect(object).to receive(:after_assigment)
+
+        object.update name: 'value'
+      end
+
       it 'returns false when validations fail' do
         object = ExampleForUpdate.new name: nil
 
