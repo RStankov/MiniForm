@@ -54,7 +54,7 @@ module MiniForm
     end
 
     def update!(attributes = {})
-      fail InvalidForm unless update attributes
+      fail InvalidForm, self unless update attributes
       self
     end
 
