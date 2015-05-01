@@ -59,6 +59,23 @@ module MiniForm
       end
     end
 
+    describe 'inheritance' do
+      it 'can be inherited' do
+        parent_class = Class.new do
+          include Model
+
+          attributes :name
+        end
+
+        child_class = Class.new(parent_class) do
+          attributes :age
+        end
+
+        expect(parent_class.attribute_names).to eq %i(name)
+        expect(child_class.attribute_names).to eq %i(name age)
+      end
+    end
+
     describe '.attributes' do
       it 'generates getters' do
         object = Example.new name: 'value'

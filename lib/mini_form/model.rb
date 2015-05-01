@@ -102,6 +102,16 @@ module MiniForm
     end
 
     module ClassMethods
+      def inherited(base)
+        new_attribute_names = attribute_names.dup
+        new_models_to_save  = models_to_save.dup
+
+        base.instance_eval do
+          @attribute_names = new_attribute_names
+          @models_to_save  = new_models_to_save
+        end
+      end
+
       def attribute_names
         @attribute_names ||= []
       end

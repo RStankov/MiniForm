@@ -2,6 +2,7 @@
 
 ## Version 0.2.0
 
+* MiniForm::Model can be inherited
 * Added `assigment` callbacks, called when attributes are assigned
 * Added `assign_attributes` alias to `attributes=`
 * Exposed `errors` on MiniForm::InvalidForm
