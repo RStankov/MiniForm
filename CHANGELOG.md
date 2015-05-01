@@ -2,6 +2,8 @@
 
 ## Version 0.2.0
 
+* Included `ActiveModel::Validations::Callbacks` to `MiniForm::Model`
+
 * Added read option to `model`:
 
 ```ruby

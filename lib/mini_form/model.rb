@@ -6,6 +6,7 @@ module MiniForm
     def self.included(base)
       base.class_eval do
         include ActiveModel::Validations
+        include ActiveModel::Validations::Callbacks
         include ActiveModel::Conversion
 
         extend ActiveModel::Naming
