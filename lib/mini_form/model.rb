@@ -34,6 +34,8 @@ module MiniForm
       end
     end
 
+    alias_method :assign_attributes, :attributes=
+
     def attributes
       Hash[self.class.attribute_names.map { |name| [name, public_send(name)] }]
     end

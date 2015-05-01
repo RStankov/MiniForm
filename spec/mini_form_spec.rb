@@ -143,19 +143,21 @@ module MiniForm
       end
     end
 
-    describe '#attributes=' do
-      it 'sets attributes' do
-        object = Example.new
-        object.attributes = { name: 'iPhone', price: '$5' }
+    ['attributes=', 'assign_attributes'].each do |method_name|
+      describe "##{method_name}" do
+        it 'sets attributes' do
+          object = Example.new
+          object.public_send method_name, name: 'iPhone', price: '$5'
 
-        expect(object.attributes).to eq name: 'iPhone', price: '$5'
-      end
+          expect(object.attributes).to eq name: 'iPhone', price: '$5'
+        end
 
-      it 'ignores not listed attributes' do
-        object = Example.new
-        object.attributes = { invalid: 'value' }
+        it 'ignores not listed attributes' do
+          object = Example.new
+          object.public_send method_name, invalid: 'value'
 
-        expect(object.attributes).to eq name: nil, price: nil
+          expect(object.attributes).to eq name: nil, price: nil
+        end
       end
     end
 
