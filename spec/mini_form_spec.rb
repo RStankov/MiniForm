@@ -29,12 +29,6 @@ module MiniForm
       end
     end
 
-    ExampleWithModel = Class.new do
-      include Model
-
-      model :user, attributes: %i(name)
-    end
-
     describe 'acts as ActiveModel' do
       include ActiveModel::Lint::Tests
 
@@ -105,6 +99,12 @@ module MiniForm
     end
 
     describe '.model' do
+      ExampleWithModel = Class.new do
+        include Model
+
+        model :user, attributes: %i(name)
+      end
+
       it 'generates model accessors' do
         object = ExampleWithModel.new user: user
         expect(object.user).to eq user
