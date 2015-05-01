@@ -86,7 +86,6 @@ module MiniForm
     end
 
     module ClassMethods
-      # :api: private
       def attribute_names
         @attribute_names ||= []
       end

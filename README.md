@@ -210,6 +210,10 @@ end
     <td>Defines an attribute, it can delegate to sub object</td>
   </tr>
   <tr>
+    <td>.attribute_names</td>
+    <td>Returns list of attribute names</td>
+  </tr>
+  <tr>
     <td>#initialize</td>
     <td>Meant to be overwritten. By defaults calls `attributes=`</td>
   </tr>
