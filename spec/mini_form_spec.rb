@@ -143,6 +143,22 @@ module MiniForm
       end
     end
 
+    describe '#attributes=' do
+      it 'sets attributes' do
+        object = Example.new
+        object.attributes = { name: 'iPhone', price: '$5' }
+
+        expect(object.attributes).to eq name: 'iPhone', price: '$5'
+      end
+
+      it 'ignores not listed attributes' do
+        object = Example.new
+        object.attributes = { invalid: 'value' }
+
+        expect(object.attributes).to eq name: nil, price: nil
+      end
+    end
+
     describe '#update' do
       ExampleForUpdate = Class.new do
         include Model
