@@ -127,14 +127,16 @@ module MiniForm
         if delegate.nil?
           attr_accessor(*attributes)
         else
-          self.delegate(*attributes, to: delegate, prefix: prefix, allow_nil: allow_nil)
-          self.delegate(*attributes.map { |attr| "#{attr}=" }, to: delegate, prefix: prefix, allow_nil: allow_nil)
+          delegate(*attributes, to: delegate, prefix: prefix, allow_nil: allow_nil)
+          delegate(*attributes.map { |attr| "#{attr}=" }, to: delegate, prefix: prefix, allow_nil: allow_nil)
         end
       end
 
-      def model(name, attributes: [], prefix: nil, allow_nil: nil, save: false)
+      def model(name, attributes: [], read: [], prefix: nil, allow_nil: nil, save: false)
         attributes(name)
         attributes(*attributes, delegate: name, prefix: prefix, allow_nil: allow_nil) unless attributes.empty?
+
+        delegate *read, to: name, prefix: prefix, allow_nil: nil
 
         validates name, 'mini_form/nested' => true
 

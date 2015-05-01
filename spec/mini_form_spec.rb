@@ -2,18 +2,19 @@ require 'spec_helper'
 
 module MiniForm
   describe Model do
-    let(:user) { User.new name: 'Name' }
+    let(:user) { User.new id: 1, name: 'name', age: 28 }
 
     class User
       include ActiveModel::Model
 
-      attr_accessor :name
+      attr_accessor :id, :name, :age
 
       validates :name, presence: true
     end
 
     Example = Class.new do
       include Model
+
       attributes :name, :price
     end
 
@@ -102,12 +103,19 @@ module MiniForm
       ExampleWithModel = Class.new do
         include Model
 
-        model :user, attributes: %i(name)
+        model :user, attributes: %i(name), read: %i(id)
       end
 
       it 'generates model accessors' do
         object = ExampleWithModel.new user: user
         expect(object.user).to eq user
+      end
+
+      it 'can delegate only a reader' do
+        object = ExampleWithModel.new user: user
+
+        expect(object).not_to respond_to :id=
+        expect(object.id).to eq user.id
       end
 
       it 'can delegate model attributes' do
