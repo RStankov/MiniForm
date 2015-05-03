@@ -1,6 +1,6 @@
 # Changelog
 
-## Version 0.2.0
+## Version 0.2.0 (unreleased)
 
 * Included `ActiveModel::Validations::Callbacks` to `MiniForm::Model`
 
