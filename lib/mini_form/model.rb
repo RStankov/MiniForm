@@ -3,7 +3,7 @@ require 'active_model'
 
 module MiniForm
   module Model
-    def self.included(base)
+    def self.included(base) # rubocop:disable MethodLength
       base.class_eval do
         include ActiveModel::Validations
         include ActiveModel::Validations::Callbacks
@@ -133,11 +133,11 @@ module MiniForm
         end
       end
 
-      def model(name, attributes: [], read: [], prefix: nil, allow_nil: nil, save: false)
+      def model(name, attributes: [], read: [], prefix: nil, allow_nil: nil, save: false) # rubocop:disable ParameterLists
         attributes(name)
         attributes(*attributes, delegate: name, prefix: prefix, allow_nil: allow_nil) unless attributes.empty?
 
-        delegate *read, to: name, prefix: prefix, allow_nil: nil
+        delegate(*read, to: name, prefix: prefix, allow_nil: nil)
 
         validates name, 'mini_form/nested' => true
 
