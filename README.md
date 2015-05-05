@@ -147,7 +147,7 @@ end
 
 ### Auto saving nested models
 
-In most of the time `perform` is just calling `save!`.
+Most of the time `perform` is just calling `save!`. We can avoid this by using `model`'s `save` option.
 
 ```ruby
 class SignUpForm
