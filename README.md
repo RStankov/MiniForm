@@ -46,7 +46,7 @@ class ProductsController < ApplicationController
     @product = ProductForm.new
 
     if @product.update(product_params)
-      redirect_to product_path(product.id)
+      redirect_to product_path(@product.id)
     else
       render :edit
     end
