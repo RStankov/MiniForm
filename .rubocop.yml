@@ -7,10 +7,6 @@ AllCops:
     - example/config/**/*
     - search_object.gemspec
 
-# Disables "Module definition is too long"
-ModuleLength:
-  Enabled: false
-
 # Disables "Line is too long"
 LineLength:
   Enabled: false
