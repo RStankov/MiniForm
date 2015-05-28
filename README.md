@@ -194,6 +194,27 @@ class SignUpForm
 end
 ```
 
+### Delegating model attributes
+
+```ruby
+class SignUpForm
+  include MiniForm::Model
+
+  model :user, attributes: %i(name email), read: %i(id)
+
+  def initialize
+    @user    = User.new account: @account
+  end
+end
+```
+
+```
+form = SignUpForm.new
+form.update! form_params
+form.id        # => delegates to `user.id`
+form.id = 42   # => raises `NoMethodError`
+```
+
 ### Methods
 
 <table>
