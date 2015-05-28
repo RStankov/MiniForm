@@ -134,7 +134,8 @@ module MiniForm
       end
 
       def model(name, attributes: [], read: [], prefix: nil, allow_nil: nil, save: false) # rubocop:disable ParameterLists
-        attributes(name)
+        attr_accessor name
+
         attributes(*attributes, delegate: name, prefix: prefix, allow_nil: allow_nil) unless attributes.empty?
 
         delegate(*read, to: name, prefix: prefix, allow_nil: nil)

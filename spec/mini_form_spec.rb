@@ -104,28 +104,32 @@ module MiniForm
         include Model
 
         model :user, attributes: %i(name), read: %i(id)
+
+        def initialize(user)
+          self.user = user
+        end
       end
 
       it 'generates model accessors' do
-        object = ExampleWithModel.new user: user
+        object = ExampleWithModel.new user
         expect(object.user).to eq user
       end
 
       it 'can delegate only a reader' do
-        object = ExampleWithModel.new user: user
+        object = ExampleWithModel.new user
 
         expect(object).not_to respond_to :id=
         expect(object.id).to eq user.id
       end
 
       it 'can delegate model attributes' do
-        object = ExampleWithModel.new user: user
+        object = ExampleWithModel.new user
         expect(object.name).to eq user.name
       end
 
       it 'performs nested validation for model' do
         user   = User.new
-        object = ExampleWithModel.new user: user
+        object = ExampleWithModel.new user
 
         expect(object).not_to be_valid
         expect(object.errors[:name]).to be_present
@@ -199,6 +203,10 @@ module MiniForm
         include Model
 
         model :user, attributes: %i(name), save: true
+
+        def initialize(user: user)
+          self.user = user
+        end
       end
 
       it 'updates attributes' do

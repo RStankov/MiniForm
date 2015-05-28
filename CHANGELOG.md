@@ -2,6 +2,8 @@
 
 ## Version 0.2.0 (unreleased)
 
+* Don't expose model name on `model`. _(security fix)_
+
 * Included `ActiveModel::Validations::Callbacks` to `MiniForm::Model`
 
 * Added read option to `model`:
