@@ -1,6 +1,6 @@
 # Changelog
 
-## Version 0.2.0 (unreleased)
+## Version 0.2.0
 
 * Don't expose model name on `model`. _(security fix)_
 
