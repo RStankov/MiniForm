@@ -3,7 +3,7 @@ require 'active_model'
 
 module MiniForm
   module Model
-    def self.included(base) # rubocop:disable MethodLength, AbcSize
+    def self.included(base)
       base.class_eval do
         include ActiveModel::Validations
         include ActiveModel::Validations::Callbacks
@@ -50,7 +50,7 @@ module MiniForm
       end
     end
 
-    alias_method :assign_attributes, :attributes=
+    alias assign_attributes attributes=
 
     def attributes
       Hash[self.class.attribute_names.map { |name| [name, public_send(name)] }]
@@ -72,7 +72,7 @@ module MiniForm
     end
 
     def update!(attributes = {})
-      fail InvalidForm, self unless update attributes
+      raise InvalidForm, self unless update attributes
       self
     end
 

@@ -1,7 +1,7 @@
 require: rubocop-rspec
 
-AllCops:
-  RunRailsCops: true
+Rails:
+  Enabled: true
   Exclude:
     - example/db/**/*
     - example/config/**/*
@@ -15,6 +15,18 @@ ModuleLength:
 LineLength:
   Enabled: false
 
+# Disables "Method is too long"
+MethodLength:
+  Enabled: false
+
+# Disables "Assignment Branch Condition size for included is too high"
+AbcSize:
+  Enabled: false
+
+# Disables "Block has too many lines"
+BlockLength:
+  Enabled: false
+
 # Disables "Missing top-level class documentation comment"
 Documentation:
   Enabled: false
@@ -25,4 +37,16 @@ Style/EachWithObject:
 
 # Disables "Prefer reduce over inject."
 Style/CollectionMethods:
+  Enabled: false
+
+# Disables "Use tr instead of gsubs"
+Performance/StringReplacement:
+  Enabled: false
+
+# Disables "Example has too many expectations"
+RSpec/MultipleExpectations:
+  Enabled: false
+
+# Disables "Example has too many lines"
+RSpec/ExampleLength:
   Enabled: false

@@ -204,7 +204,7 @@ module MiniForm
 
         model :user, attributes: %i(name), save: true
 
-        def initialize(user: user)
+        def initialize(user:)
           self.user = user
         end
       end
@@ -224,9 +224,11 @@ module MiniForm
       it 'calls "perfom" method when validation pass' do
         object = ExampleForUpdate.new name: 'value'
 
-        expect(object).to receive(:perform)
+        allow(object).to receive(:perform)
 
         object.update
+
+        expect(object).to have_received(:perform)
       end
 
       it 'calls "save" for the model' do
@@ -242,28 +244,37 @@ module MiniForm
       it 'supports update callbacks' do
         object = ExampleForUpdate.new name: 'value'
 
-        expect(object).to receive(:before_update)
-        expect(object).to receive(:after_update)
+        allow(object).to receive(:before_update)
+        allow(object).to receive(:after_update)
 
         object.update
+
+        expect(object).to have_received(:before_update)
+        expect(object).to have_received(:after_update)
       end
 
       it 'supports legacy assig callbacks' do
         object = ExampleForUpdate.new
 
-        expect(object).to receive(:before_assigment)
-        expect(object).to receive(:after_assigment)
+        allow(object).to receive(:before_assigment)
+        allow(object).to receive(:after_assigment)
 
         object.update name: 'value'
+
+        expect(object).to have_received(:before_assigment)
+        expect(object).to have_received(:after_assigment)
       end
 
       it 'supports assign callbacks' do
         object = ExampleForUpdate.new
 
-        expect(object).to receive(:before_assignment)
-        expect(object).to receive(:after_assignment)
+        allow(object).to receive(:before_assignment)
+        allow(object).to receive(:after_assignment)
 
         object.update name: 'value'
+
+        expect(object).to have_received(:before_assignment)
+        expect(object).to have_received(:after_assignment)
       end
 
       it 'returns false when validations fail' do
@@ -275,9 +286,11 @@ module MiniForm
       it 'does not call "perfom" method when validation fail' do
         object = ExampleForUpdate.new name: nil
 
-        expect(object).not_to receive(:perform)
+        allow(object).to receive(:perform)
 
         object.update
+
+        expect(object).not_to have_received(:perform)
       end
     end
 
@@ -290,9 +303,11 @@ module MiniForm
       it 'calls update with given arguments' do
         object = Example.new
 
-        expect(object).to receive(:update).with(:attributes).and_return true
+        allow(object).to receive(:update).and_return true
 
         object.update! :attributes
+
+        expect(object).to have_received(:update).with(:attributes)
       end
 
       it 'raises error when update fails' do
