@@ -267,11 +267,11 @@ form.id = 42   # => raises `NoMethodError`
     <td>Meant to be overwritten.</td>
   </tr>
   <tr>
-    <td>#before_assigment</td>
+    <td>#before_assignment</td>
     <td>Meant to be overwritten.</td>
   </tr>
   <tr>
-    <td>#after_assigment</td>
+    <td>#after_assignment</td>
     <td>Meant to be overwritten.</td>
   </tr>
   <tr>

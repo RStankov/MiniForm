@@ -1,9 +1,10 @@
 # Changelog
 
-## Unreleased
+## Unreleased 0.2.1
 
 * Fix typo in `assignment` callbaks
 * Alias `assignment` to `assigment` for backwards compatibility
+
 ## Version 0.2.0
 
 * Don't expose model name on `model`. _(security fix)_
