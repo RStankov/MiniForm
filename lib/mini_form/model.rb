@@ -3,7 +3,7 @@ require 'active_model'
 
 module MiniForm
   module Model
-    def self.included(base) # rubocop:disable MethodLength
+    def self.included(base) # rubocop:disable MethodLength, AbcSize
       base.class_eval do
         include ActiveModel::Validations
         include ActiveModel::Validations::Callbacks
@@ -16,6 +16,7 @@ module MiniForm
 
         define_model_callbacks :update
         define_model_callbacks :assignment
+
         # For backwards compatibility purpose
         define_model_callbacks :assigment
 
