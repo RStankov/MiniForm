@@ -248,11 +248,20 @@ module MiniForm
         object.update
       end
 
-      it 'supports assign callbacks' do
+      it 'supports legacy assig callbacks' do
         object = ExampleForUpdate.new
 
         expect(object).to receive(:before_assigment)
         expect(object).to receive(:after_assigment)
+
+        object.update name: 'value'
+      end
+
+      it 'supports assign callbacks' do
+        object = ExampleForUpdate.new
+
+        expect(object).to receive(:before_assignment)
+        expect(object).to receive(:after_assignment)
 
         object.update name: 'value'
       end
