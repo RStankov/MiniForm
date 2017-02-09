@@ -40,9 +40,11 @@ module MiniForm
     end
 
     def attributes=(attributes)
-      run_callbacks :assigment do
-        attributes.slice(*self.class.attribute_names).each do |name, value|
-          public_send "#{name}=", value
+      run_callbacks :assignment do
+        run_callbacks :assigment do
+          attributes.slice(*self.class.attribute_names).each do |name, value|
+            public_send "#{name}=", value
+          end
         end
       end
     end
