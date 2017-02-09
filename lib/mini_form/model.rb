@@ -15,11 +15,17 @@ module MiniForm
         extend ClassMethods
 
         define_model_callbacks :update
+        define_model_callbacks :assignment
+        # For backwards compatibility purpose
         define_model_callbacks :assigment
 
         before_update :before_update
         after_update :after_update
 
+        before_assignment :before_assignment
+        after_assignment :after_assignment
+
+        # For backwards compatibility purpose
         before_assigment :before_assigment
         after_assigment :after_assigment
       end
@@ -91,6 +97,14 @@ module MiniForm
     end
 
     def after_update
+      # noop
+    end
+
+    def before_assignment
+      # noop
+    end
+
+    def after_assignment
       # noop
     end
 
