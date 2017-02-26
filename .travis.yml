@@ -3,6 +3,9 @@ rvm:
   - 2.2.5
   - 2.3.3
   - 2.4.0
+script:
+  - bundle exec rubocop
+  - bundle exec rspec spec
 sudo: false
 cache: bundle
 notifications:
