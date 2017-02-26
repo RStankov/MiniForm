@@ -1,11 +1,9 @@
 language: ruby
 rvm:
-  - 2.2
-  - 2.3
-script:
-  - bundle exec rubocop
-  - bundle exec rspec spec
+  - 2.2.5
+  - 2.3.3
+  - 2.4.0
+sudo: false
+cache: bundle
 notifications:
   email: false
-before_install:
-  - gem install bundler
