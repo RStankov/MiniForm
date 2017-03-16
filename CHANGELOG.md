@@ -1,9 +1,13 @@
 # Changelog
 
+## Version 0.2.2
+
+* Bump activemodel requirements (@vestimir)
+
 ## Version 0.2.1
 
-* Fix typo in `assignment` callbaks
-* Alias `assignment` to `assigment` for backwards compatibility
+* Fix typo in `assignment` callbaks (@ayrton)
+* Alias `assignment` to `assigment` for backwards compatibility (@ayrton)
 
 ## Version 0.2.0
 
