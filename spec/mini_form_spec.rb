@@ -24,6 +24,8 @@ module MiniForm
       attr_reader :user
 
       attributes :name, delegate: :user
+      attributes :id, delegate: :user, prefix: true
+      attributes :name, delegate: :user, prefix: 'full'
 
       def initialize(user)
         @user = user
@@ -139,6 +141,11 @@ module MiniForm
     describe '.attributes_names' do
       it 'returns attribute names' do
         expect(Example.attribute_names).to eq %i(name price)
+      end
+
+      it 'can handle prefixes' do
+        expect(ExampleWithDelegate.attribute_names).to include :user_id
+        expect(ExampleWithDelegate.attribute_names).to include :full_name
       end
     end
 

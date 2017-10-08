@@ -140,7 +140,13 @@ module MiniForm
       end
 
       def attributes(*attributes, delegate: nil, prefix: nil, allow_nil: nil)
-        attribute_names.push(*attributes)
+        if prefix
+          attribute_names.push(*attributes.map do |name|
+            :"#{prefix == true ? delegate : prefix}_#{name}"
+          end)
+        else
+          attribute_names.push(*attributes)
+        end
 
         if delegate.nil?
           attr_accessor(*attributes)
