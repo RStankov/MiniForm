@@ -39,6 +39,10 @@ Style/EachWithObject:
 Style/CollectionMethods:
   Enabled: false
 
+# Disables "%i-literals should be delimited by [ and ]."
+Style/PercentLiteralDelimiters:
+  Enabled: false
+
 # Disables "Use tr instead of gsubs"
 Performance/StringReplacement:
   Enabled: false
