@@ -1,5 +1,10 @@
 # Changelog
 
+## Version 0.2.3
+
+
+* Fix handling delegated attributes prefixes in `attribute_names` (@rstankov)
+
 ## Version 0.2.2
 
 * Bump activemodel requirements (@vestimir)
