@@ -5,7 +5,8 @@ module MiniForm
     def initialize(object)
       @errors = object.errors
 
-      super "Form validation failed for: #{errors.keys.join(', ')}"
+      arr_obj = errors.respond_to?(:attribute_names) ? errors.attribute_names : errors.keys
+      super "Form validation failed for: #{arr_obj.join(', ')}"
     end
   end
 end

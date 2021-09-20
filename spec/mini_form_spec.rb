@@ -51,6 +51,10 @@ module MiniForm
         expect(value).to eq(expected_value), message
       end
 
+      def assert_respond_to(klass, method, message = nil)
+        expect(klass).to respond_to(method), message
+      end
+
       ActiveModel::Lint::Tests.public_instance_methods.map(&:to_s).grep(/^test/).each do |method|
         example(method.gsub('_', ' ')) { send method }
       end
