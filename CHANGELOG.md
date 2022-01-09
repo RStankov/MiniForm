@@ -1,7 +1,10 @@
 # Changelog
 
-## Version 0.2.3
+## Version 0.2.4
 
+* Rails 6+ support (@emilov)
+
+## Version 0.2.3
 
 * Fix handling delegated attributes prefixes in `attribute_names` (@rstankov)
 
