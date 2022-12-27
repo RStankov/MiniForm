@@ -1,6 +1,5 @@
 [![Gem Version](https://badge.fury.io/rb/mini_form.svg)](http://badge.fury.io/rb/mini_form)
 [![Code Climate](https://codeclimate.com/github/RStankov/MiniForm.svg)](https://codeclimate.com/github/RStankov/MiniForm)
-[![Build Status](https://secure.travis-ci.org/RStankov/MiniForm.svg)](http://travis-ci.org/RStankov/MiniForm)
 [![Code coverage](https://coveralls.io/repos/RStankov/MiniForm/badge.svg?branch=master)](https://coveralls.io/r/RStankov/MiniForm)
 
 # MiniForm
