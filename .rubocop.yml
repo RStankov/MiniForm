@@ -1,11 +1,11 @@
 require: rubocop-rspec
 
-Rails:
-  Enabled: true
+AllCops:
   Exclude:
-    - example/db/**/*
-    - example/config/**/*
-    - search_object.gemspec
+    - mini_form.gemspec
+
+  SuggestExtensions: false
+  NewCops: disable
 
 # Disables "Module definition is too long"
 ModuleLength:
@@ -43,14 +43,16 @@ Style/CollectionMethods:
 Style/PercentLiteralDelimiters:
   Enabled: false
 
-# Disables "Use tr instead of gsubs"
-Performance/StringReplacement:
-  Enabled: false
-
 # Disables "Example has too many expectations"
 RSpec/MultipleExpectations:
   Enabled: false
 
 # Disables "Example has too many lines"
 RSpec/ExampleLength:
+  Enabled: false
+
+Style/HashSyntax:
+  Enabled: false
+
+Lint/MissingSuper:
   Enabled: false

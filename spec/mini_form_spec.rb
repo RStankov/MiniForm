@@ -2,43 +2,73 @@
 
 require 'spec_helper'
 
+module SpecSupport
+  class User
+    include ActiveModel::Model
+
+    attr_accessor :id, :name, :age
+
+    validates :name, presence: true
+  end
+
+  class Example
+    include MiniForm::Model
+
+    attributes :name, :price
+  end
+
+  class ExampleWithDelegate
+    include MiniForm::Model
+
+    attr_reader :user
+
+    attributes :name, delegate: :user
+    attributes :id, delegate: :user, prefix: true
+    attributes :name, delegate: :user, prefix: 'full'
+
+    def initialize(user)
+      @user = user
+    end
+  end
+
+  class ExampleWithModel
+    include MiniForm::Model
+
+    model :user, attributes: %i(name), read: %i(id)
+
+    def initialize(user)
+      self.user = user
+    end
+  end
+
+  class ExampleForUpdate
+    include MiniForm::Model
+
+    attributes :name
+
+    validates :name, presence: true
+  end
+
+  class ExampleForSave
+    include MiniForm::Model
+
+    model :user, attributes: %i(name), save: true
+
+    def initialize(user:)
+      self.user = user
+    end
+  end
+end
+
 module MiniForm
   describe Model do
-    let(:user) { User.new id: 1, name: 'name', age: 28 }
-
-    class User
-      include ActiveModel::Model
-
-      attr_accessor :id, :name, :age
-
-      validates :name, presence: true
-    end
-
-    Example = Class.new do
-      include Model
-
-      attributes :name, :price
-    end
-
-    ExampleWithDelegate = Class.new do
-      include Model
-
-      attr_reader :user
-
-      attributes :name, delegate: :user
-      attributes :id, delegate: :user, prefix: true
-      attributes :name, delegate: :user, prefix: 'full'
-
-      def initialize(user)
-        @user = user
-      end
-    end
+    let(:user) { SpecSupport::User.new id: 1, name: 'name', age: 28 }
 
     describe 'acts as ActiveModel' do
       include ActiveModel::Lint::Tests
 
       before do
-        @model = Example.new
+        @model = SpecSupport::Example.new
       end
 
       def assert(condition, message = nil)
@@ -81,24 +111,24 @@ module MiniForm
 
     describe '.attributes' do
       it 'generates getters' do
-        object = Example.new name: 'value'
+        object = SpecSupport::Example.new name: 'value'
         expect(object.name).to eq 'value'
       end
 
       it 'generates setters' do
-        object = Example.new
+        object = SpecSupport::Example.new
         object.name = 'value'
 
         expect(object.name).to eq 'value'
       end
 
       it 'can delegate getter' do
-        object = ExampleWithDelegate.new user
+        object = SpecSupport::ExampleWithDelegate.new user
         expect(object.name).to eq user.name
       end
 
       it 'can delegate setter' do
-        object = ExampleWithDelegate.new user
+        object = SpecSupport::ExampleWithDelegate.new user
 
         object.name = 'New Name'
 
@@ -108,36 +138,26 @@ module MiniForm
     end
 
     describe '.model' do
-      ExampleWithModel = Class.new do
-        include Model
-
-        model :user, attributes: %i(name), read: %i(id)
-
-        def initialize(user)
-          self.user = user
-        end
-      end
-
       it 'generates model accessors' do
-        object = ExampleWithModel.new user
+        object = SpecSupport::ExampleWithModel.new user
         expect(object.user).to eq user
       end
 
       it 'can delegate only a reader' do
-        object = ExampleWithModel.new user
+        object = SpecSupport::ExampleWithModel.new user
 
         expect(object).not_to respond_to :id=
         expect(object.id).to eq user.id
       end
 
       it 'can delegate model attributes' do
-        object = ExampleWithModel.new user
+        object = SpecSupport::ExampleWithModel.new user
         expect(object.name).to eq user.name
       end
 
       it 'performs nested validation for model' do
-        user   = User.new
-        object = ExampleWithModel.new user
+        user   = SpecSupport::User.new
+        object = SpecSupport::ExampleWithModel.new user
 
         expect(object).not_to be_valid
         expect(object.errors[:name]).to be_present
@@ -146,33 +166,33 @@ module MiniForm
 
     describe '.attributes_names' do
       it 'returns attribute names' do
-        expect(Example.attribute_names).to eq %i(name price)
+        expect(SpecSupport::Example.attribute_names).to eq %i(name price)
       end
 
       it 'can handle prefixes' do
-        expect(ExampleWithDelegate.attribute_names).to include :user_id
-        expect(ExampleWithDelegate.attribute_names).to include :full_name
+        expect(SpecSupport::ExampleWithDelegate.attribute_names).to include :user_id
+        expect(SpecSupport::ExampleWithDelegate.attribute_names).to include :full_name
       end
     end
 
     describe '#initialize' do
       it 'can be called with no arguments' do
-        expect { Example.new }.not_to raise_error
+        expect { SpecSupport::Example.new }.not_to raise_error
       end
 
       it 'assign the passed attributes' do
-        object = Example.new price: '$5'
+        object = SpecSupport::Example.new price: '$5'
 
         expect(object.price).to eq '$5'
       end
 
       it 'ignores invalid attributes' do
-        expect { Example.new invalid: 'attribute' }.not_to raise_error
+        expect { SpecSupport::Example.new invalid: 'attribute' }.not_to raise_error
       end
 
       it 'handles HashWithIndifferentAccess hashes' do
         hash   = ActiveSupport::HashWithIndifferentAccess.new 'price' => '$5'
-        object = Example.new hash
+        object = SpecSupport::Example.new hash
 
         expect(object.price).to eq '$5'
       end
@@ -180,7 +200,7 @@ module MiniForm
 
     describe '#attributes' do
       it 'returns attributes' do
-        object = Example.new name: 'iPhone', price: '$5'
+        object = SpecSupport::Example.new name: 'iPhone', price: '$5'
         expect(object.attributes).to eq name: 'iPhone', price: '$5'
       end
     end
@@ -188,14 +208,14 @@ module MiniForm
     ['attributes=', 'assign_attributes'].each do |method_name|
       describe "##{method_name}" do
         it 'sets attributes' do
-          object = Example.new
+          object = SpecSupport::Example.new
           object.public_send method_name, name: 'iPhone', price: '$5'
 
           expect(object.attributes).to eq name: 'iPhone', price: '$5'
         end
 
         it 'ignores not listed attributes' do
-          object = Example.new
+          object = SpecSupport::Example.new
           object.public_send method_name, invalid: 'value'
 
           expect(object.attributes).to eq name: nil, price: nil
@@ -204,38 +224,20 @@ module MiniForm
     end
 
     describe '#update' do
-      ExampleForUpdate = Class.new do
-        include Model
-
-        attributes :name
-
-        validates :name, presence: true
-      end
-
-      ExampleForSave = Class.new do
-        include Model
-
-        model :user, attributes: %i(name), save: true
-
-        def initialize(user:)
-          self.user = user
-        end
-      end
-
       it 'updates attributes' do
-        object = ExampleForUpdate.new name: 'value'
+        object = SpecSupport::ExampleForUpdate.new name: 'value'
 
         expect { object.update(name: 'new value') }.to change { object.name }.to 'new value'
       end
 
       it 'returns true when validations pass' do
-        object = ExampleForUpdate.new name: 'value'
+        object = SpecSupport::ExampleForUpdate.new name: 'value'
 
         expect(object.update).to eq true
       end
 
       it 'calls "perfom" method when validation pass' do
-        object = ExampleForUpdate.new name: 'value'
+        object = SpecSupport::ExampleForUpdate.new name: 'value'
 
         allow(object).to receive(:perform)
 
@@ -245,7 +247,7 @@ module MiniForm
       end
 
       it 'calls "save" for the model' do
-        object = ExampleForSave.new user: user
+        object = SpecSupport::ExampleForSave.new user: user
 
         allow(user).to receive(:save!)
 
@@ -255,7 +257,7 @@ module MiniForm
       end
 
       it 'supports update callbacks' do
-        object = ExampleForUpdate.new name: 'value'
+        object = SpecSupport::ExampleForUpdate.new name: 'value'
 
         allow(object).to receive(:before_update)
         allow(object).to receive(:after_update)
@@ -267,7 +269,7 @@ module MiniForm
       end
 
       it 'supports legacy assig callbacks' do
-        object = ExampleForUpdate.new
+        object = SpecSupport::ExampleForUpdate.new
 
         allow(object).to receive(:before_assigment)
         allow(object).to receive(:after_assigment)
@@ -279,7 +281,7 @@ module MiniForm
       end
 
       it 'supports assign callbacks' do
-        object = ExampleForUpdate.new
+        object = SpecSupport::ExampleForUpdate.new
 
         allow(object).to receive(:before_assignment)
         allow(object).to receive(:after_assignment)
@@ -291,13 +293,13 @@ module MiniForm
       end
 
       it 'returns false when validations fail' do
-        object = ExampleForUpdate.new name: nil
+        object = SpecSupport::ExampleForUpdate.new name: nil
 
         expect(object.update).to eq false
       end
 
       it 'does not call "perfom" method when validation fail' do
-        object = ExampleForUpdate.new name: nil
+        object = SpecSupport::ExampleForUpdate.new name: nil
 
         allow(object).to receive(:perform)
 
@@ -309,12 +311,12 @@ module MiniForm
 
     describe '#update!' do
       it 'returns self' do
-        object = Example.new
+        object = SpecSupport::Example.new
         expect(object.update!).to eq object
       end
 
       it 'calls update with given arguments' do
-        object = Example.new
+        object = SpecSupport::Example.new
 
         allow(object).to receive(:update).and_return true
 
@@ -324,7 +326,7 @@ module MiniForm
       end
 
       it 'raises error when update fails' do
-        object = Example.new
+        object = SpecSupport::Example.new
 
         allow(object).to receive(:update).and_return false
 

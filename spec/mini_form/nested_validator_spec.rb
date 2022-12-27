@@ -2,29 +2,31 @@
 
 require 'spec_helper'
 
+module SpecSupport
+  class Person
+    include ActiveModel::Model
+
+    attr_accessor :name
+
+    validates :name, presence: true
+  end
+
+  class Record
+    include ActiveModel::Validations
+
+    attr_accessor :user
+
+    def initialize(user)
+      @user = user
+    end
+  end
+end
+
 module MiniForm
   describe NestedValidator do
-    class User
-      include ActiveModel::Model
-
-      attr_accessor :name
-
-      validates :name, presence: true
-    end
-
-    class Record
-      include ActiveModel::Validations
-
-      attr_accessor :user
-
-      def initialize(user)
-        @user = user
-      end
-    end
-
     let(:validator) { described_class.new(attributes: [:user]) }
-    let(:user)      { User.new }
-    let(:record)    { Record.new(user) }
+    let(:user)      { SpecSupport::Person.new }
+    let(:record)    { SpecSupport::Record.new(user) }
 
     it 'copies errors from submodel to model' do
       validator.validate(record)
