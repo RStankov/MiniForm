@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module MiniForm
   class InvalidForm < StandardError
     attr_reader :errors

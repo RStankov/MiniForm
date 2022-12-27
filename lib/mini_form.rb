@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'mini_form/version'
 require 'mini_form/model'
 require 'mini_form/errors'

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 module MiniForm
@@ -20,7 +22,7 @@ module MiniForm
       end
     end
 
-    let(:validator) { NestedValidator.new(attributes: [:user]) }
+    let(:validator) { described_class.new(attributes: [:user]) }
     let(:user)      { User.new }
     let(:record)    { Record.new(user) }
 

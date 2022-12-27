@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'active_support/all'
 require 'active_model'
 
@@ -73,6 +75,7 @@ module MiniForm
 
     def update!(attributes = {})
       raise InvalidForm, self unless update attributes
+
       self
     end
 
@@ -156,7 +159,7 @@ module MiniForm
         end
       end
 
-      def model(name, attributes: [], read: [], prefix: nil, allow_nil: nil, save: false) # rubocop:disable ParameterLists
+      def model(name, attributes: [], read: [], prefix: nil, allow_nil: nil, save: false) # rubocop:disable Metrics/ParameterLists
         attr_accessor name
 
         attributes(*attributes, delegate: name, prefix: prefix, allow_nil: allow_nil) unless attributes.empty?
