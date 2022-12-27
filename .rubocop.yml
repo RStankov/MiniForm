@@ -8,27 +8,27 @@ AllCops:
   NewCops: disable
 
 # Disables "Module definition is too long"
-ModuleLength:
+Metrics/ModuleLength:
   Enabled: false
 
 # Disables "Line is too long"
-LineLength:
+Layout/LineLength:
   Enabled: false
 
 # Disables "Method is too long"
-MethodLength:
+Metrics/MethodLength:
   Enabled: false
 
 # Disables "Assignment Branch Condition size for included is too high"
-AbcSize:
+Metrics/AbcSize:
   Enabled: false
 
 # Disables "Block has too many lines"
-BlockLength:
+Metrics/BlockLength:
   Enabled: false
 
 # Disables "Missing top-level class documentation comment"
-Documentation:
+Style/Documentation:
   Enabled: false
 
 # Disables "Use each_with_object instead of inject"
