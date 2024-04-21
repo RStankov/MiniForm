@@ -1,5 +1,9 @@
 # Changelog
 
+## Version 0.2.5
+
+* Added `main_model` (@rstankov)
+
 ## Version 0.2.4
 
 * Rails 6+ support (@emilov)

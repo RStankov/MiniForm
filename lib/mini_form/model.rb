@@ -170,6 +170,12 @@ module MiniForm
 
         models_to_save << name if save
       end
+
+      def main_model(model_name, **args)
+        delegate :id, :persisted?, :to_param, :new_record?, to: model_name
+
+        model model_name, **args
+      end
     end
   end
 end

@@ -193,6 +193,26 @@ class SignUpForm
 end
 ```
 
+### Using in forms
+
+Using `main_model` will delegate `id`, `to_param`, `persisted?` and `new_record?` to the model. Allowing you to use it in forms.
+
+```ruby
+class SignUpForm
+  include MiniForm::Model
+
+  main_model :user
+
+  def initialize
+    @user = User.new(account: @account)
+  end
+end
+```
+
+```eruby
+<% form_for SignUpForm.new %>
+```
+
 ### Delegating model attributes
 
 ```ruby
@@ -202,7 +222,7 @@ class SignUpForm
   model :user, attributes: %i(name email), read: %i(id)
 
   def initialize
-    @user    = User.new account: @account
+    @user = User.new(account: @account)
   end
 end
 ```

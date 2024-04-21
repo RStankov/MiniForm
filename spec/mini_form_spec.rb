@@ -9,6 +9,18 @@ module SpecSupport
     attr_accessor :id, :name, :age
 
     validates :name, presence: true
+
+    def to_param
+      "user-#{id}"
+    end
+
+    def persisted?
+      id.present?
+    end
+
+    def new_record?
+      !persisted?
+    end
   end
 
   class Example
@@ -53,6 +65,16 @@ module SpecSupport
     include MiniForm::Model
 
     model :user, attributes: %i(name), save: true
+
+    def initialize(user:)
+      self.user = user
+    end
+  end
+
+  class ExampleFormModel
+    include MiniForm::Model
+
+    main_model :user
 
     def initialize(user:)
       self.user = user
@@ -161,6 +183,20 @@ module MiniForm
 
         expect(object).not_to be_valid
         expect(object.errors[:name]).to be_present
+      end
+    end
+
+    describe '.main_model' do
+      it 'delegates Rails form attributes to the model' do
+        user   = SpecSupport::User.new
+        object = SpecSupport::ExampleFormModel.new(user: user)
+
+        expect(object).to have_attributes(
+          id: user.id,
+          to_param: user.to_param,
+          persisted?: user.persisted?,
+          new_record?: user.new_record?
+        )
       end
     end
 
